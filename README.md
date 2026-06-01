@@ -52,7 +52,7 @@ A clean, professional **Contact Management CRM** built with Django and Python. M
 ### 1. Clone or unzip the project
 
 ```bash
-unzip djangocrm_project.zip
+git clone https://github.com/anugushruthii/FUTURE_FS_02.git
 cd djangocrm
 ```
 
@@ -169,71 +169,3 @@ Lead  ──►  Prospect  ──►  Customer
 | **Customer** | Converted / paying client |
 
 ---
-
-## 🚀 Deploy to Production
-
-### Option 1 — Railway (Recommended, Free)
-
-1. Push project to a GitHub repository
-2. Go to [railway.app](https://railway.app) → New Project → Deploy from GitHub
-3. Add environment variable: `DJANGO_SETTINGS_MODULE=djangocrm.settings`
-4. Done — live in ~2 minutes
-
-### Option 2 — Render (Free)
-
-1. Push to GitHub
-2. Go to [render.com](https://render.com) → New Web Service
-3. Build command: `pip install django && python manage.py migrate`
-4. Start command: `gunicorn djangocrm.wsgi`
-
-### Option 3 — PythonAnywhere (Free)
-
-1. Upload zip at [pythonanywhere.com](https://pythonanywhere.com)
-2. Unzip in console, configure WSGI file
-3. Set static files path in dashboard
-
-### Before deploying, update `settings.py`:
-
-```python
-DEBUG = False
-ALLOWED_HOSTS = ['your-domain.com']
-SECRET_KEY = os.environ.get('SECRET_KEY')  # Use env variable
-```
-
----
-
-## 🔐 Default Demo Credentials
-
-> ⚠️ Change these before deploying to production!
-
-```
-Username: admin
-Password: admin123
-```
-
----
-
-## 🛣️ Roadmap / What to Add Next
-
-- [ ] Password reset via email
-- [ ] Kanban deal pipeline board
-- [ ] Pagination on contacts list
-- [ ] Export contacts to CSV
-- [ ] Analytics charts (Chart.js)
-- [ ] Notes history with timestamps
-- [ ] REST API with Django REST Framework
-- [ ] PostgreSQL for production
-
----
-
-## 📄 License
-
-This project is open source under the [MIT License](https://opensource.org/licenses/MIT).
-
----
-
-## 🙌 Built With
-
-- [Django](https://www.djangoproject.com/) — The web framework for perfectionists with deadlines
-- [Plus Jakarta Sans](https://fonts.google.com/specimen/Plus+Jakarta+Sans) — UI font
-- [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) — Brand font
