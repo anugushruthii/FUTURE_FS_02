@@ -1,0 +1,81 @@
+{% extends 'crm/base.html' %}
+
+{% block title %}Dashboard — DjangoCRM{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Welcome back, {{ request.user.first_name|default:request.user.username }}{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{% url 'add_contact' %}" class="btn btn-primary btn-sm">+ Add Contact</a>
+{% endblock %}
+
+{% block content %}
+<!-- Stats -->
+<div class="stats-grid">
+  <div class="stat-card total">
+    <div class="stat-label">Total Contacts</div>
+    <div class="stat-value">{{ total }}</div>
+    <span class="stat-badge">All records</span>
+  </div>
+  <div class="stat-card leads">
+    <div class="stat-label">Leads</div>
+    <div class="stat-value">{{ leads }}</div>
+    <span class="stat-badge">In pipeline</span>
+  </div>
+  <div class="stat-card customers">
+    <div class="stat-label">Customers</div>
+    <div class="stat-value">{{ customers }}</div>
+    <span class="stat-badge">Converted</span>
+  </div>
+  <div class="stat-card prospects">
+    <div class="stat-label">Prospects</div>
+    <div class="stat-value">{{ prospects }}</div>
+    <span class="stat-badge">Potential</span>
+  </div>
+</div>
+
+<!-- Recent Contacts -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">Recent Contacts</div>
+    <a href="{% url 'contacts' %}" class="btn btn-outline btn-sm">View All</a>
+  </div>
+  {% if recent_contacts %}
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Status</th>
+            <th>Added</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contact in recent_contacts %}
+          <tr>
+            <td>
+              <div class="contact-name">{{ contact.full_name }}</div>
+              <div class="contact-email">{{ contact.email }}</div>
+            </td>
+            <td>{{ contact.company|default:"—" }}</td>
+            <td><span class="badge badge-{{ contact.status }}">{{ contact.get_status_display }}</span></td>
+            <td>{{ contact.created_at|date:"M d, Y" }}</td>
+            <td>
+              <a href="{% url 'edit_contact' contact.pk %}" class="btn btn-outline btn-sm">Edit</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">👥</div>
+      <h3>No contacts yet</h3>
+      <p>Add your first contact to get started.</p>
+      <a href="{% url 'add_contact' %}" class="btn btn-primary">+ Add Contact</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

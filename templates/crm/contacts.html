@@ -1,0 +1,72 @@
+{% extends 'crm/base.html' %}
+
+{% block title %}Contacts — DjangoCRM{% endblock %}
+{% block page_title %}Contacts{% endblock %}
+{% block page_subtitle %}Manage your leads and customers{% endblock %}
+
+{% block topbar_actions %}
+  <a href="{% url 'add_contact' %}" class="btn btn-primary btn-sm">+ Add Contact</a>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <div class="card-title">All Contacts</div>
+    <form method="get" class="search-bar" style="margin:0">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" name="q" value="{{ query }}" placeholder="Search contacts..." class="search-input">
+      </div>
+      <button type="submit" class="btn btn-outline btn-sm">Search</button>
+      {% if query %}<a href="{% url 'contacts' %}" class="btn btn-outline btn-sm">Clear</a>{% endif %}
+    </form>
+  </div>
+
+  {% if contacts %}
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Company</th>
+            <th>Status</th>
+            <th>Added</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contact in contacts %}
+          <tr>
+            <td><div class="contact-name">{{ contact.full_name }}</div></td>
+            <td>{{ contact.email }}</td>
+            <td>{{ contact.phone|default:"—" }}</td>
+            <td>{{ contact.company|default:"—" }}</td>
+            <td><span class="badge badge-{{ contact.status }}">{{ contact.get_status_display }}</span></td>
+            <td>{{ contact.created_at|date:"M d, Y" }}</td>
+            <td style="display:flex;gap:8px;padding:14px 16px">
+              <a href="{% url 'edit_contact' contact.pk %}" class="btn btn-outline btn-sm">✏️ Edit</a>
+              <a href="{% url 'delete_contact' contact.pk %}" class="btn btn-sm" style="background:#FEF2F2;color:#EF4444;border:1px solid #FECACA">🗑️</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">🔍</div>
+      {% if query %}
+        <h3>No results for "{{ query }}"</h3>
+        <p>Try a different search term.</p>
+        <a href="{% url 'contacts' %}" class="btn btn-outline btn-sm">Clear Search</a>
+      {% else %}
+        <h3>No contacts yet</h3>
+        <p>Add your first contact to get started.</p>
+        <a href="{% url 'add_contact' %}" class="btn btn-primary">+ Add Contact</a>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

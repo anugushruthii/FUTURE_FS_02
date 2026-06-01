@@ -1,0 +1,21 @@
+{% extends 'crm/base.html' %}
+
+{% block title %}Delete Contact — DjangoCRM{% endblock %}
+{% block page_title %}Delete Contact{% endblock %}
+
+{% block content %}
+<div class="confirm-card card">
+  <div class="card-body">
+    <div class="confirm-icon">🗑️</div>
+    <h2>Delete Contact?</h2>
+    <p>Are you sure you want to delete <strong>{{ contact.full_name }}</strong>? This action cannot be undone.</p>
+    <div class="confirm-actions">
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+      </form>
+      <a href="{% url 'contacts' %}" class="btn btn-outline">Cancel</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
